@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fernanda.library.model.FormatoLivro;
 import com.fernanda.library.model.Livro;
 import com.fernanda.library.model.StatusLeitura;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,14 +15,17 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class GoogleBooksService {
 
+    @Value("${google.books.api-key:}")
+    private String apiKey;
+
     public Livro buscarLivroNaApi(String tituloDesejado) {
         try {
             String tituloFormatado = URLEncoder.encode(tituloDesejado, StandardCharsets.UTF_8);
 
-            // chave API
-            String minhaChave = "AIzaSyDFs-HneQY_RgKRpa2xebiUMueu3a07C8U";
-
-            String url = "https://www.googleapis.com/books/v1/volumes?q=intitle:" + tituloFormatado + "&key=" + minhaChave;
+            String url = "https://www.googleapis.com/books/v1/volumes?q=intitle:" + tituloFormatado;
+            if (apiKey != null && !apiKey.isBlank()) {
+                url += "&key=" + apiKey;
+            }
 
             RestTemplate restTemplate = new RestTemplate();
             String respostaGoogle = restTemplate.getForObject(url, String.class);

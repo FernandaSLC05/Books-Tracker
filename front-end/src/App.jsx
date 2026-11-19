@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import './App.css'
 
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8080').replace(/\/+$/, '')
+
 function App() {
   const [livros, setLivros] = useState([])
 
@@ -17,7 +19,7 @@ function App() {
   const [filtroAtual, setFiltroAtual] = useState('TODOS')
 
   function buscarLivros() {
-    axios.get("http://localhost:8080/livros")
+    axios.get(`${API_URL}/livros`)
       .then(resposta => setLivros(resposta.data))
       .catch(erro => console.log(erro))
   }
@@ -30,7 +32,7 @@ function App() {
     event.preventDefault()
     if (!busca) return;
 
-    axios.get(`http://localhost:8080/livros/buscar-google?titulo=${busca}`)
+    axios.get(`${API_URL}/livros/buscar-google?titulo=${encodeURIComponent(busca)}`)
       .then(resposta => {
         if(resposta.data) {
             setTitulo(resposta.data.titulo)
@@ -63,7 +65,7 @@ function App() {
       capaUrl: capaUrl // NOVO: Manda o link da capa para o Java salvar!
     }
 
-    axios.post("http://localhost:8080/livros", novoLivro)
+    axios.post(`${API_URL}/livros`, novoLivro)
       .then(() => {
         alert("✅ Livro salvo com sucesso!")
         buscarLivros()
@@ -81,7 +83,7 @@ function App() {
 
   function deletarLivro(id) {
     if (window.confirm("Tem certeza que deseja excluir este livro da sua biblioteca?")) {
-      axios.delete(`http://localhost:8080/livros/${id}`)
+      axios.delete(`${API_URL}/livros/${id}`)
         .then(() => {
           alert("🗑️ Livro excluído com sucesso!")
           buscarLivros()

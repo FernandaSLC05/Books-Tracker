@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/livros")
-@CrossOrigin //Permite que o react converse com o java
+@CrossOrigin(origins = "${app.cors.allowed-origins:*}") // Permite que o React converse com o Java
 
 //Essa classe serve para receber os "pedidos" do front
 public class LivroController {
