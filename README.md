@@ -7,8 +7,6 @@ Um sistema Full-Stack desenvolvido para gerenciar leituras de forma automatizada
 - **Aplicação (Front-end):** https://books-tracker-rho.vercel.app
 - **API (Back-end):** https://books-tracker-siu7.onrender.com
 
-> **Nota:** o back-end está hospedado no plano gratuito do Render, que entra em hibernação após um período sem acessos. A primeira requisição pode levar cerca de 30 a 50 segundos para acordar o servidor; após isso, o uso fica imediato.
-
 ## ✨ Funcionalidades Atuais
 
 * **Integração com Google Books API:** Busca automática de título, autor, número de páginas e capa do livro digitando apenas o nome.
